@@ -146,7 +146,8 @@ export function TimeBoxing() {
                 variant="ghost"
                 className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               >
-                <X className="h-4 w-4 text-white" />
+                <X className="h-4 w-4 text-black" />
+                <p className="text-sm text-black-200">Done!</p>
               </Button>
             </div>
           ))}
