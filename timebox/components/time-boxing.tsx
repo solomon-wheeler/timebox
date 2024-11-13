@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { X, Plus, Clock } from "lucide-react";
+import { Alert } from "@/components/ui/alert"; // Ensure this import is correct
 
 interface TimeBox {
   id: string;
@@ -18,6 +19,7 @@ export function TimeBoxing() {
   const [newActivity, setNewActivity] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const storedTimeBoxes = localStorage.getItem("timeBoxes");
@@ -31,6 +33,10 @@ export function TimeBoxing() {
   }, [timeBoxes]);
 
   const addTimeBox = () => {
+    if (!newActivity) {
+      setError("Please fill in task, and times");
+      return;
+    }
     if (newActivity && startTime && endTime) {
       const newTimeBox: TimeBox = {
         id: Date.now().toString(),
@@ -42,6 +48,7 @@ export function TimeBoxing() {
       setNewActivity("");
       setStartTime("");
       setEndTime("");
+      setError("");
     }
   };
 
@@ -51,17 +58,20 @@ export function TimeBoxing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-300 via-purple-400 to-purple-500 p-8 flex flex-col items-center justify-center">
-      {" "}
       <div className="w-full max-w-4xl bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-2xl p-8 space-y-8">
         <h1 className="text-4xl font-bold text-center text-white mb-8">
           {" "}
           Time Box ⏲️📦
         </h1>
-
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            {error}
+          </Alert>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <Label htmlFor="activity" className="text-white">
-              Activity
+              Task
             </Label>
             <Input
               id="activity"
