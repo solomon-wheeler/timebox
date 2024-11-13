@@ -58,16 +58,21 @@ export function TimeBoxing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-300 via-purple-400 to-purple-500 p-8 flex flex-col items-center justify-center">
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          {error}
+        </Alert>
+      )}
       <div className="w-full max-w-4xl bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-2xl p-8 space-y-8">
         <h1 className="text-4xl font-bold text-center text-white mb-8">
           {" "}
           Time Box ⏲️📦
         </h1>
         {error && (
-          <Alert variant="destructive" className="mb-4">
-            {error}
-          </Alert>
-        )}
+        <Alert variant="destructive" className="mb-4">
+          {error}
+        </Alert>
+      )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <Label htmlFor="activity" className="text-white">
