@@ -56,7 +56,7 @@ export function TimeBoxing() {
       };
       setTimeBoxes([...timeBoxes, newTimeBox]);
       setNewActivity("");
-      setStartTime("");
+      setStartTime(endTime); // Set start time to the end time of the newly added timebox
       setEndTime("");
       setError("");
     }
