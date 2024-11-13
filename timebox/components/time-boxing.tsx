@@ -5,14 +5,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { X, Plus, Clock } from "lucide-react";
-import { Alert } from "@/components/ui/alert"; // Ensure this import is correct
+import { Alert } from "@/components/ui/alert";
 
 interface TimeBox {
   id: string;
   activity: string;
   startTime: string;
   endTime: string;
+  color: string; // Add color property
 }
+
+const colors = [
+  "bg-red-500",
+  "bg-green-500",
+  "bg-blue-500",
+  "bg-yellow-500",
+  "bg-purple-500",
+];
 
 export function TimeBoxing() {
   const [timeBoxes, setTimeBoxes] = useState<TimeBox[]>([]);
@@ -43,6 +52,7 @@ export function TimeBoxing() {
         activity: newActivity,
         startTime,
         endTime,
+        color: colors[timeBoxes.length % colors.length], // Assign color
       };
       setTimeBoxes([...timeBoxes, newTimeBox]);
       setNewActivity("");
@@ -58,21 +68,16 @@ export function TimeBoxing() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-300 via-purple-400 to-purple-500 p-8 flex flex-col items-center justify-center">
-      {error && (
-        <Alert variant="destructive" className="mb-4">
-          {error}
-        </Alert>
-      )}
       <div className="w-full max-w-4xl bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-3xl shadow-2xl p-8 space-y-8">
         <h1 className="text-4xl font-bold text-center text-white mb-8">
           {" "}
           Time Box ⏲️📦
         </h1>
         {error && (
-        <Alert variant="destructive" className="mb-4">
-          {error}
-        </Alert>
-      )}
+          <Alert variant="destructive" className="mb-4">
+            {error}
+          </Alert>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <Label htmlFor="activity" className="text-white">
@@ -123,7 +128,7 @@ export function TimeBoxing() {
           {timeBoxes.map((box) => (
             <div
               key={box.id}
-              className="bg-white bg-opacity-20 rounded-lg p-4 flex items-center justify-between group hover:bg-opacity-30 transition-all duration-300"
+              className={`${box.color} bg-opacity-20 rounded-lg p-4 flex items-center justify-between group hover:bg-opacity-30 transition-all duration-300`}
             >
               <div className="flex items-center space-x-4">
                 <Clock className="h-6 w-6 text-white opacity-70" />
