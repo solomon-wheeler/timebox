@@ -35,11 +35,27 @@ export function TimeBoxing() {
     if (storedTimeBoxes) {
       setTimeBoxes(JSON.parse(storedTimeBoxes));
     }
+    const now = new Date();
+    const currentTime = now.toTimeString().slice(0, 5);
+    setStartTime(currentTime);
+    const endTime = new Date(now.getTime() + 60 * 60 * 1000)
+      .toTimeString()
+      .slice(0, 5);
+    setEndTime(endTime);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("timeBoxes", JSON.stringify(timeBoxes));
   }, [timeBoxes]);
+
+  const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newStartTime = e.target.value;
+    setStartTime(newStartTime);
+    const [hours, minutes] = newStartTime.split(":").map(Number);
+    const newEndTime = new Date();
+    newEndTime.setHours(hours + 1, minutes);
+    setEndTime(newEndTime.toTimeString().slice(0, 5));
+  };
 
   const addTimeBox = () => {
     if (!newActivity) {
@@ -99,7 +115,7 @@ export function TimeBoxing() {
               id="startTime"
               type="time"
               value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
+              onChange={handleStartTimeChange}
               className="bg-white bg-opacity-20 border-none text-white placeholder-gray-300"
             />
           </div>
